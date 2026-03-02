@@ -4,8 +4,20 @@ import random
 # head : meta
 # html : everything visible
 
-text = input("Enter text to translate:")
+text = input("Enter text to translate: ")
+
+print("\nWhich translation method would you prefer?\n"
+        "1: Colour dictionary (e.g. all ‘e’s will be green)\n"
+        "2: Pure random (e.g. there will be green, red, etc. ‘e’s)")
+while True:
+    method = input("Your choice (1 or 2): ")
+    if method in ("1", "2"):
+        break
+print(f"You selected method {method}.")
+
 squares_html = ""
+
+# for method 1 only "color dictionary"
 letters_colors = {}
 
 def random_color():
@@ -17,13 +29,14 @@ def random_color():
 for character in text:
     if character == " ":
         squares_html += '<div class="square" style="background:rgb(254,254,254)"></div>'
-    else:
+    elif method == "1":
         # If the letter doesn't have a color yet
         # (best to do it that way rather than having 26 lines, one for each 26 letters)
         if character not in letters_colors:
             letters_colors[character] = random_color()
-
         squares_html += f'<div class="square" style="background:{letters_colors[character]}"></div>'
+    elif method == "2":
+        squares_html += f'<div class="square" style="background:{random_color()}"></div>'
 
 
 html = f"""<!doctype html>
@@ -31,7 +44,7 @@ html = f"""<!doctype html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ma page</title>
+  <title>colorproject</title>
 
   <style>
     .square {{
